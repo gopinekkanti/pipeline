@@ -27,7 +27,7 @@ pipeline {
         stage('deploy'){
             steps{
                 sshPublisher(publishers: [sshPublisherDesc(configName: 'SonarQube', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'ls', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: 'target', sourceFiles: '**/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
-                slackSend (channel: 'sonarqube', message: "Deployed Successfully: ${env.JOB_NAME} [${env.BUILD_NUMBER}], teamDomain: 'ngroupspvtltd', tokenCredentialId: 'sona', (${env.BUILD_URL})")
+                slackSend (channel: 'sonarqube', message: "Deployed to $configname Successfully: ${env.JOB_NAME} [${env.BUILD_NUMBER}], teamDomain: 'ngroupspvtltd', tokenCredentialId: 'sona', (${env.BUILD_URL})")
            }
         }
         
