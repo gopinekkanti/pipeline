@@ -7,6 +7,8 @@ pipeline {
         stage('checkout') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/gopinekkanti/pipeline.git']]])
+               slackSend (channel: 'sonarqube', message: "Checkout Successfully from https://github.com/gopinekkanti/pipeline.git: ${env.JOB_NAME} [${env.BUILD_NUMBER}], teamDomain: 'ngroupspvtltd', tokenCredentialId: 'sona', (${env.BUILD_URL})")
+
             }
         }
         stage('build'){
