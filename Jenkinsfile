@@ -12,7 +12,7 @@ pipeline {
         stage('build'){
             steps{
                 sh 'mvn clean install -f pom.xml'
-                    slackSend (channel: 'sonarqube', message: "code pulled from Git: ${env.JOB_NAME} [${env.BUILD_NUMBER}], teamDomain: 'ngroupspvtltd', tokenCredentialId: 'sona', (${env.BUILD_URL})")
+                    slackSend (channel: 'sonarqube', message: "Build Successful: ${env.JOB_NAME} [${env.BUILD_NUMBER}], teamDomain: 'ngroupspvtltd', tokenCredentialId: 'sona', (${env.BUILD_URL})")
             }
         }
         stage('CodeQulity'){
