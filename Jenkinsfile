@@ -7,33 +7,12 @@ pipeline {
         stage('checkout') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/gopinekkanti/pipeline.git']]])
-               slackSend (channel: 'sonarqube', message: "Checkout Successfully from https://github.com/gopinekkanti/pipeline.git: ${env.JOB_NAME} [${env.BUILD_NUMBER}], teamDomain: 'ngroupspvtltd', tokenCredentialId: 'sona', (${env.BUILD_URL})")
-
             }
         }
         stage('build'){
             steps{
-                sh 'mvn clean install -f pom.xml'
-                    slackSend (channel: 'sonarqube', message: "Build Successful: ${env.JOB_NAME} [${env.BUILD_NUMBER}], teamDomain: 'ngroupspvtltd', tokenCredentialId: 'sona', (${env.BUILD_URL})")
+                sh 'mvn clean install -f pom.xml'            
             }
         }
-        stage('CodeQulity'){
-            steps {
-            withSonarQubeEnv('SonarQube'){
-            sh 'mvn clean install -f pom.xml sonar:sonar' 
-              }
-               slackSend (channel: 'sonarqube', message: "Code hasbeen Scanned: ${env.JOB_NAME} [${env.BUILD_NUMBER}], teamDomain: 'ngroupspvtltd', tokenCredentialId: 'sona', (${env.BUILD_URL})")
-
-            }
-        }
-        stage('deploy'){
-            steps{
-                sshPublisher(publishers: [sshPublisherDesc(configName: 'SonarQube', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'ls', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: 'target', sourceFiles: '**/*.war')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
-                slackSend (channel: 'sonarqube', message: "Deployed to server 54.160.226.115 Successfully: ${env.JOB_NAME} [${env.BUILD_NUMBER}], teamDomain: 'ngroupspvtltd', tokenCredentialId: 'sona', (${env.BUILD_URL})")
-           }
-        }
-        
-    }
-}
 }
 }
