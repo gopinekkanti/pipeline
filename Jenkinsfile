@@ -3,8 +3,7 @@ pipeline {
     stages {
         stage('checkout') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/gopinekkanti/pipeline.git']]])
-            }
+git branch: 'main', url: 'https://github.com/gopinekkanti/pipeline.git'            }
         }
         stage('build'){
             steps{
