@@ -11,5 +11,12 @@ git branch: 'main', url: 'https://github.com/gopinekkanti/pipeline.git'
                 sh 'mvn clean install -f pom.xml'            
             }
         }
+        stage('CodeQulity'){
+            steps {
+            withSonarQubeEnv('sonarjenkins'){
+            sh 'mvn clean install -f pom.xml sonar:sonar' 
+              }
 }
+}
+    }
 }
