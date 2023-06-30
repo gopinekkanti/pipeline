@@ -3,7 +3,8 @@ pipeline {
     stages {
         stage('checkout') {
             steps {
-git branch: 'main', url: 'https://github.com/gopinekkanti/pipeline.git'            }
+git branch: 'main', url: 'https://github.com/gopinekkanti/pipeline.git'           
+            }
         }
         stage('build'){
             steps{
